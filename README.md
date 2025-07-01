@@ -9,3 +9,5 @@ Day1.
 실패: Green CI
 
 Day2.
+성공: Green CI
+
