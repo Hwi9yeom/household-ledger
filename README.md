@@ -9,5 +9,5 @@ Day1.
 실패: Green CI
 
 Day2.
-성공: Green CI
+성공: Green CI, 도메인 정리, 테스트 코드 작성
 
