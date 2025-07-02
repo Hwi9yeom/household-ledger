@@ -1,5 +1,7 @@
 # household-ledger
 
+[CI](https://github.com/<USER>/household-ledger/actions/workflows/ci.yml/badge.svg)
+
 가계부 프로젝트
 
 Temurin-Java 21, Spring Boot 3.5.3, MySQL
