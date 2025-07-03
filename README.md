@@ -22,3 +22,8 @@ Day1.
 Day2.
 성공: Green CI, 도메인 정리, 테스트 코드 작성
 
+Day3.
+Github card
+
+Day 4.
+Created empty test skeleton for monthly query
