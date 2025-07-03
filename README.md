@@ -1,6 +1,6 @@
 # household-ledger
 
-[CI](https://github.com/<USER>/household-ledger/actions/workflows/ci.yml/badge.svg)
+[CI](https://github.com/Hwi9yeom/household-ledger/actions/workflows/ci.yml/badge.svg)
 
 가계부 프로젝트
 
