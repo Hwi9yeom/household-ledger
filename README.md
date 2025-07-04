@@ -27,3 +27,6 @@ Github card
 
 Day 4.
 Created empty test skeleton for monthly query
+
+Day 5. Monthly query endpoint (GET /entries?month=YYYY-MM) green
+
