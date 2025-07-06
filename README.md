@@ -30,3 +30,17 @@ Created empty test skeleton for monthly query
 
 Day 5. Monthly query endpoint (GET /entries?month=YYYY-MM) green
 
+
+
+
+
+
+
+
+
+## External Learning
+| Date | Event | Key Takeaway | Next Action |
+|------|-------|-------------|-------------|
+| 25-07-05 | 휴먼아시아 인권아카데미<br>“기업과 인권” | 개인정보 보호·노동권이 스타트업 KPI로 부각 | 서비스 암호화 설계시 ESG 체크리스트 반영 |
+| 25-07-06 | Christian Dior: Designer of Dreams | ‘일관성 속 변주’ 디자인 원칙 | 대시보드 색·테마 토큰 전략 적용 |
+
