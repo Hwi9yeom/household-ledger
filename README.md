@@ -39,8 +39,8 @@ Day 5. Monthly query endpoint (GET /entries?month=YYYY-MM) green
 
 
 ## External Learning
-| Date | Event | Key Takeaway | Next Action |
-|------|-------|-------------|-------------|
-| 25-07-05 | 휴먼아시아 인권아카데미<br>“기업과 인권” | 개인정보 보호·노동권이 스타트업 KPI로 부각 | 서비스 암호화 설계시 ESG 체크리스트 반영 |
-| 25-07-06 | Christian Dior: Designer of Dreams | ‘일관성 속 변주’ 디자인 원칙 | 대시보드 색·테마 토큰 전략 적용 |
-
+| Date     | Event | Key Takeaway | Next Action                                                          |
+|----------|-------|-------------|----------------------------------------------------------------------|
+| 25-07-05 | 휴먼아시아 인권아카데미<br>“기업과 인권” | 개인정보 보호·노동권이 스타트업 KPI로 부각 | 서비스 암호화 설계시 ESG 체크리스트 반영                                             |
+| 25-07-06 | Christian Dior: Designer of Dreams | ‘일관성 속 변주’ 디자인 원칙 | 대시보드 색·테마 토큰 전략 적용                                                   |
+| 25-07-07 | 원티드 프리온보딩 백엔드 코스 – NoSQL(MongoDB)·샤딩 아키텍처 | 단일-노드 RDB → 수평 확장 Doc Store 전환 시 **핫스팟 방지 샤드키 설계**·**일관성 Trade-off** 파악 | 지출 집계(Analytics) 모듈을 MongoDB Aggregation + $match 샤드키 실험 해볼 수 있지 않을까 |
