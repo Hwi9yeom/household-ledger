@@ -34,6 +34,12 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public User(String email, String name) {
+        this();
+        this.email = email;
+        this.name = name;
+    }
+
     public User(String email, String username, String password, String name) {
         this();
         this.email = email;
