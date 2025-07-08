@@ -14,6 +14,12 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
     @Column(nullable = false)
     private String name;
 
@@ -28,9 +34,11 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public User(String email, String name) {
+    public User(String email, String username, String password, String name) {
         this();
         this.email = email;
+        this.username = username;
+        this.password = password;
         this.name = name;
     }
 
@@ -61,6 +69,22 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public LocalDateTime getCreatedAt() {

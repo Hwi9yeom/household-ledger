@@ -31,7 +31,7 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        testUser = new User("test@example.com", "Test User");
+        testUser = new User("test@example.com", "testuser", "password", "Test User");
         testUser.setId(1L);
         testUser.setCreatedAt(LocalDateTime.now());
         testUser.setUpdatedAt(LocalDateTime.now());
@@ -40,7 +40,7 @@ class UserServiceTest {
     @Test
     void getAllUsers_ShouldReturnAllUsers() {
         // Given
-        List<User> users = Arrays.asList(testUser, new User("test2@example.com", "Test User 2"));
+        List<User> users = Arrays.asList(testUser, new User("test2@example.com", "testuser2", "password", "Test User 2"));
         when(userRepository.findAll()).thenReturn(users);
 
         // When
@@ -96,7 +96,7 @@ class UserServiceTest {
     @Test
     void createUser_WhenEmailNotExists_ShouldCreateUser() {
         // Given
-        User newUser = new User("new@example.com", "New User");
+        User newUser = new User("new@example.com", "newuser", "password", "New User");
         when(userRepository.existsByEmail("new@example.com")).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(newUser);
 
@@ -112,7 +112,7 @@ class UserServiceTest {
     @Test
     void createUser_WhenEmailExists_ShouldThrowException() {
         // Given
-        User newUser = new User("test@example.com", "New User");
+        User newUser = new User("test@example.com", "testuser", "password", "New User");
         when(userRepository.existsByEmail("test@example.com")).thenReturn(true);
 
         // When & Then
@@ -127,7 +127,7 @@ class UserServiceTest {
     @Test
     void updateUser_WhenUserExists_ShouldUpdateUser() {
         // Given
-        User updateDetails = new User("updated@example.com", "Updated User");
+        User updateDetails = new User("updated@example.com", "updateduser", "password", "Updated User");
         when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
         when(userRepository.existsByEmail("updated@example.com")).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(testUser);
@@ -146,7 +146,7 @@ class UserServiceTest {
     @Test
     void updateUser_WhenUserNotExists_ShouldThrowException() {
         // Given
-        User updateDetails = new User("updated@example.com", "Updated User");
+        User updateDetails = new User("updated@example.com", "updateduser", "password", "Updated User");
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
         // When & Then
@@ -161,7 +161,7 @@ class UserServiceTest {
     @Test
     void updateUser_WhenEmailAlreadyExists_ShouldThrowException() {
         // Given
-        User updateDetails = new User("existing@example.com", "Updated User");
+        User updateDetails = new User("existing@example.com", "existinguser", "password", "Updated User");
         when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
         when(userRepository.existsByEmail("existing@example.com")).thenReturn(true);
 
