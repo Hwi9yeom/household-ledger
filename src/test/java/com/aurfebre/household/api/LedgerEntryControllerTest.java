@@ -278,4 +278,10 @@ class LedgerEntryControllerTest {
         mockMvc.perform(get("/api/ledger-entries/user/1/type/INVALID_TYPE"))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    void should_require_jwt_to_access_entries() throws Exception {
+        mockMvc.perform(get("/api/ledger-entries"))
+                .andExpect(status().isUnauthorized());
+    }
 }
