@@ -30,7 +30,9 @@ Created empty test skeleton for monthly query
 
 Day 5. Monthly query endpoint (GET /entries?month=YYYY-MM) green
 
-Day 9. JWT auth 
+Day 9. JWT auth
+
+Day 10. Auth-guard test 작성(401 기대) 
 
 
 
