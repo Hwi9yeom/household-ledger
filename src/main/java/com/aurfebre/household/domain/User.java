@@ -14,11 +14,14 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(unique = true)
+    private String googleId;
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String password;
+    private AuthProvider authProvider = AuthProvider.GOOGLE;
 
     @Column(nullable = false)
     private String name;
@@ -40,12 +43,12 @@ public class User {
         this.name = name;
     }
 
-    public User(String email, String username, String password, String name) {
+    public User(String email, String name, String googleId) {
         this();
         this.email = email;
-        this.username = username;
-        this.password = password;
         this.name = name;
+        this.googleId = googleId;
+        this.authProvider = AuthProvider.GOOGLE;
     }
 
     @PreUpdate
@@ -85,12 +88,20 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getGoogleId() {
+        return googleId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setGoogleId(String googleId) {
+        this.googleId = googleId;
+    }
+
+    public AuthProvider getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(AuthProvider authProvider) {
+        this.authProvider = authProvider;
     }
 
     public LocalDateTime getCreatedAt() {

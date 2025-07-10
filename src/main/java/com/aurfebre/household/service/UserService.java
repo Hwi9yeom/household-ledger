@@ -60,4 +60,20 @@ public class UserService {
         }
         userRepository.deleteById(id);
     }
+
+    public User processOAuthPostLogin(String email, String name, String googleId) {
+        Optional<User> existingUser = userRepository.findByGoogleId(googleId);
+        
+        if (existingUser.isPresent()) {
+            // Update existing user info
+            User user = existingUser.get();
+            user.setEmail(email);
+            user.setName(name);
+            return userRepository.save(user);
+        } else {
+            // Create new user
+            User newUser = new User(email, name, googleId);
+            return userRepository.save(newUser);
+        }
+    }
 }

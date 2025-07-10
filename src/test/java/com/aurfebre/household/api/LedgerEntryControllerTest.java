@@ -4,6 +4,9 @@ import com.aurfebre.household.domain.LedgerEntry;
 import com.aurfebre.household.domain.enums.EntryType;
 import com.aurfebre.household.domain.enums.TransactionType;
 import com.aurfebre.household.service.LedgerEntryService;
+import com.aurfebre.household.service.UserService;
+import com.aurfebre.household.security.JwtTokenProvider;
+import com.aurfebre.household.security.OAuth2SuccessHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +41,15 @@ class LedgerEntryControllerTest {
 
     @MockitoBean
     private LedgerEntryService ledgerEntryService;
+
+    @MockitoBean
+    private UserService userService;
+
+    @MockitoBean
+    private JwtTokenProvider jwtTokenProvider;
+
+    @MockitoBean
+    private OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Autowired
     private ObjectMapper objectMapper;
