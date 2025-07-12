@@ -4,4 +4,4 @@
 .vscode/
 build/
 .gradle/
-local.properties
+src/main/resources/local.properties
