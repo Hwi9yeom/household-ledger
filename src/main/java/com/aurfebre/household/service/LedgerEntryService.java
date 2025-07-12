@@ -3,6 +3,7 @@ package com.aurfebre.household.service;
 import com.aurfebre.household.domain.LedgerEntry;
 import com.aurfebre.household.domain.enums.EntryType;
 import com.aurfebre.household.repository.LedgerEntryRepository;
+import com.aurfebre.household.security.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,7 +72,11 @@ public class LedgerEntryService {
 
     @Transactional(readOnly = true)
     public Optional<LedgerEntry> getEntryById(Long id) {
-        return ledgerEntryRepository.findById(id);
+        Optional<LedgerEntry> entry = ledgerEntryRepository.findById(id);
+        if (entry.isPresent()) {
+            validateOwnership(entry.get());
+        }
+        return entry;
     }
 
     public LedgerEntry createEntry(LedgerEntry entry) {
@@ -83,12 +88,20 @@ public class LedgerEntryService {
             throw new IllegalArgumentException("Entry date cannot be in the future");
         }
         
+        Long currentUserId = SecurityUtils.getCurrentUserId();
+        if (currentUserId == null) {
+            throw new IllegalStateException("User must be authenticated");
+        }
+        entry.setUserId(currentUserId);
+        
         return ledgerEntryRepository.save(entry);
     }
 
     public LedgerEntry updateEntry(Long id, LedgerEntry entryDetails) {
         LedgerEntry entry = ledgerEntryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("LedgerEntry not found with id: " + id));
+
+        validateOwnership(entry);
 
         if (entryDetails.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Amount must be greater than zero");
@@ -110,9 +123,17 @@ public class LedgerEntryService {
     }
 
     public void deleteEntry(Long id) {
-        if (!ledgerEntryRepository.existsById(id)) {
-            throw new IllegalArgumentException("LedgerEntry not found with id: " + id);
-        }
+        LedgerEntry entry = ledgerEntryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("LedgerEntry not found with id: " + id));
+        
+        validateOwnership(entry);
         ledgerEntryRepository.deleteById(id);
+    }
+
+    private void validateOwnership(LedgerEntry entry) {
+        Long currentUserId = SecurityUtils.getCurrentUserId();
+        if (currentUserId == null || !currentUserId.equals(entry.getUserId())) {
+            throw new IllegalArgumentException("Access denied: You can only access your own ledger entries");
+        }
     }
 }
