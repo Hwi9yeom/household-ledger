@@ -15,24 +15,49 @@ Temurin-Java 21, Spring Boot 3.5.3, MySQL
 
 나중에 구현하는 기능 더 많아지면 바꿔볼까 고민 해봐야겠다.
 
-Day1. 
-성공: Health API, Repo
-실패: Green CI
+React + TypeScript를 선택한 이유
 
-Day2.
-성공: Green CI, 도메인 정리, 테스트 코드 작성
+1. SPA(Single Page Application)의 장점
 
-Day3.
-Github card
+- 빠른 사용자 경험: 페이지 새로고침 없이 즉각적인 반응
+- 로컬 스토리지 활용: 비회원도 데이터를 브라우저에 저장하고 관리
+- 오프라인 지원: 인터넷 없이도 기본 기능 사용 가능
 
-Day 4.
-Created empty test skeleton for monthly query
+2. 간편함
 
-Day 5. Monthly query endpoint (GET /entries?month=YYYY-MM) green
+- 컴포넌트 재사용: 입력 폼, 리스트 등을 모듈화
+- 상태 관리: React Context로 손쉽게 데이터 흐름 관리 가능
+- 타입 안정성: TypeScript로 런타임 에러 방지
 
-Day 9. JWT auth
+3. 확장성
 
-Day 10. Auth-guard test 작성(401 기대) 
+- 모바일 앱 전환: React Native로 쉽게 전환 가능
+- PWA 지원: 앱처럼 설치 가능한 웹앱으로 발전 가능
+- API 분리: 백엔드와 프론트엔드 독립적 개발/배포
+
+Thymeleaf vs React 비교
+
+Thymeleaf 장점:
+
+-  서버 사이드 렌더링 (SEO 유리)
+-  단순한 구조
+-  Spring Boot와 통합 용이
+-  배포 간편 (하나의 JAR 파일)
+
+React 장점:
+
+-  더 나은 사용자 경험 (빠른 인터랙션)
+-  로컬 스토리지 기반 오프라인 모드
+-  복잡한 상태 관리 용이
+-  모던한 개발 도구 생태계
+
+이 프로젝트에 React 사용 이유
+
+1. 비회원 모드 지원: 로컬 스토리지로 데이터 관리
+2. 실시간 업데이트: 수입/지출 추가 시 즉시 반영
+3. 복잡한 필터링: 월별, 카테고리별 필터링
+4. 차트/그래프: 향후 시각화 기능 추가 용이
+
 
 
 
