@@ -289,27 +289,27 @@ class LedgerEntryServiceTest {
     @Test
     void deleteEntry_WhenEntryExists_ShouldDeleteEntry() {
         // Given
-        when(ledgerEntryRepository.existsById(1L)).thenReturn(true);
+        when(ledgerEntryRepository.findById(1L)).thenReturn(Optional.of(testEntry));
 
         // When
         ledgerEntryService.deleteEntry(1L);
 
         // Then
-        verify(ledgerEntryRepository).existsById(1L);
+        verify(ledgerEntryRepository).findById(1L);
         verify(ledgerEntryRepository).deleteById(1L);
     }
 
     @Test
     void deleteEntry_WhenEntryNotExists_ShouldThrowException() {
         // Given
-        when(ledgerEntryRepository.existsById(1L)).thenReturn(false);
+        when(ledgerEntryRepository.findById(1L)).thenReturn(Optional.empty());
 
         // When & Then
         assertThatThrownBy(() -> ledgerEntryService.deleteEntry(1L))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("LedgerEntry not found with id: 1");
         
-        verify(ledgerEntryRepository).existsById(1L);
+        verify(ledgerEntryRepository).findById(1L);
         verify(ledgerEntryRepository, never()).deleteById(any());
     }
 }
