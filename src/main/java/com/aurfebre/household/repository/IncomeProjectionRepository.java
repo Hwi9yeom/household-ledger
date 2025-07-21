@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public interface IncomeProjectionRepository extends JpaRepository<IncomeProjecti
 
     @Query("SELECT SUM(ip.projectedAnnualIncome) FROM IncomeProjection ip " +
            "WHERE ip.userId = :userId AND ip.year = :year AND ip.isActive = true")
-    Optional<Double> sumProjectedIncomeByUserIdAndYear(@Param("userId") Long userId, @Param("year") Integer year);
+    Optional<BigDecimal> sumProjectedIncomeByUserIdAndYear(@Param("userId") Long userId, @Param("year") Integer year);
 
     @Query("SELECT ip FROM IncomeProjection ip " +
            "WHERE ip.userId = :userId AND ip.year >= :startYear AND ip.year <= :endYear AND ip.isActive = true " +

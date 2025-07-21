@@ -88,7 +88,6 @@ public class IncomeProjectionService {
         }
 
         return incomeProjectionRepository.sumProjectedIncomeByUserIdAndYear(userId, year)
-                .map(BigDecimal::valueOf)
                 .orElse(BigDecimal.ZERO);
     }
 
