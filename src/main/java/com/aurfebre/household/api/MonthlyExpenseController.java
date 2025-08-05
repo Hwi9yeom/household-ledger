@@ -4,6 +4,7 @@ import com.aurfebre.household.domain.LedgerEntry;
 import com.aurfebre.household.dto.MonthlyExpenseComparison;
 import com.aurfebre.household.dto.MonthlyExpenseSummary;
 import com.aurfebre.household.service.MonthlyExpenseService;
+import com.aurfebre.household.service.UserBudgetSettingsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +16,12 @@ import java.util.List;
 public class MonthlyExpenseController {
 
     private final MonthlyExpenseService monthlyExpenseService;
+    private final UserBudgetSettingsService userBudgetSettingsService;
 
-    public MonthlyExpenseController(MonthlyExpenseService monthlyExpenseService) {
+    public MonthlyExpenseController(MonthlyExpenseService monthlyExpenseService,
+                                    UserBudgetSettingsService userBudgetSettingsService) {
         this.monthlyExpenseService = monthlyExpenseService;
+        this.userBudgetSettingsService = userBudgetSettingsService;
     }
 
     @GetMapping("/user/{userId}")
@@ -25,7 +29,8 @@ public class MonthlyExpenseController {
             @PathVariable Long userId,
             @RequestParam YearMonth yearMonth) {
         
-        List<LedgerEntry> expenses = monthlyExpenseService.getMonthlyExpenses(userId, yearMonth);
+        int monthStartDay = userBudgetSettingsService.getSettings(userId).getMonthStartDay();
+        List<LedgerEntry> expenses = monthlyExpenseService.getMonthlyExpenses(userId, yearMonth, monthStartDay);
         return ResponseEntity.ok(expenses);
     }
 
@@ -34,7 +39,8 @@ public class MonthlyExpenseController {
             @PathVariable Long userId,
             @RequestParam YearMonth yearMonth) {
         
-        MonthlyExpenseSummary summary = monthlyExpenseService.getMonthlyExpensesSummary(userId, yearMonth);
+        int monthStartDay = userBudgetSettingsService.getSettings(userId).getMonthStartDay();
+        MonthlyExpenseSummary summary = monthlyExpenseService.getMonthlyExpensesSummary(userId, yearMonth, monthStartDay);
         return ResponseEntity.ok(summary);
     }
 
@@ -43,7 +49,8 @@ public class MonthlyExpenseController {
             @PathVariable Long userId,
             @RequestParam YearMonth yearMonth) {
         
-        MonthlyExpenseComparison comparison = monthlyExpenseService.getMonthlyComparison(userId, yearMonth);
+        int monthStartDay = userBudgetSettingsService.getSettings(userId).getMonthStartDay();
+        MonthlyExpenseComparison comparison = monthlyExpenseService.getMonthlyComparison(userId, yearMonth, monthStartDay);
         return ResponseEntity.ok(comparison);
     }
 }

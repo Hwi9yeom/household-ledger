@@ -25,15 +25,23 @@ public class MonthlyExpenseService {
     }
 
     public List<LedgerEntry> getMonthlyExpenses(Long userId, YearMonth yearMonth) {
-        LocalDate startDate = yearMonth.atDay(1);
-        LocalDate endDate = yearMonth.atEndOfMonth();
-        
+        return getMonthlyExpenses(userId, yearMonth, 1);
+    }
+
+    public List<LedgerEntry> getMonthlyExpenses(Long userId, YearMonth yearMonth, int monthStartDay) {
+        LocalDate startDate = yearMonth.atDay(monthStartDay);
+        LocalDate endDate = startDate.plusMonths(1).minusDays(1);
+
         return ledgerEntryRepository.findByUserIdAndEntryTypeAndDateBetweenOrderByDateDesc(
             userId, EntryType.EXPENSE, startDate, endDate);
     }
 
     public MonthlyExpenseSummary getMonthlyExpensesSummary(Long userId, YearMonth yearMonth) {
-        List<LedgerEntry> expenses = getMonthlyExpenses(userId, yearMonth);
+        return getMonthlyExpensesSummary(userId, yearMonth, 1);
+    }
+
+    public MonthlyExpenseSummary getMonthlyExpensesSummary(Long userId, YearMonth yearMonth, int monthStartDay) {
+        List<LedgerEntry> expenses = getMonthlyExpenses(userId, yearMonth, monthStartDay);
         Map<String, BigDecimal> categoryExpenses = new HashMap<>();
         
         // 카테고리별 합계 계산 (실제로는 Category 엔티티와 조인해야 하지만 일단 단순화)
@@ -50,10 +58,14 @@ public class MonthlyExpenseService {
     }
 
     public MonthlyExpenseComparison getMonthlyComparison(Long userId, YearMonth currentMonth) {
+        return getMonthlyComparison(userId, currentMonth, 1);
+    }
+
+    public MonthlyExpenseComparison getMonthlyComparison(Long userId, YearMonth currentMonth, int monthStartDay) {
         YearMonth previousMonth = currentMonth.minusMonths(1);
-        
-        BigDecimal currentTotal = getTotalExpenseForMonth(userId, currentMonth);
-        BigDecimal previousTotal = getTotalExpenseForMonth(userId, previousMonth);
+
+        BigDecimal currentTotal = getTotalExpenseForMonth(userId, currentMonth, monthStartDay);
+        BigDecimal previousTotal = getTotalExpenseForMonth(userId, previousMonth, monthStartDay);
         
         BigDecimal difference = currentTotal.subtract(previousTotal);
         double percentageChange = 0.0;
@@ -72,13 +84,13 @@ public class MonthlyExpenseService {
         );
     }
 
-    private BigDecimal getTotalExpenseForMonth(Long userId, YearMonth yearMonth) {
-        LocalDate startDate = yearMonth.atDay(1);
-        LocalDate endDate = yearMonth.atEndOfMonth();
-        
+    private BigDecimal getTotalExpenseForMonth(Long userId, YearMonth yearMonth, int monthStartDay) {
+        LocalDate startDate = yearMonth.atDay(monthStartDay);
+        LocalDate endDate = startDate.plusMonths(1).minusDays(1);
+
         BigDecimal total = ledgerEntryRepository.sumByUserIdAndEntryTypeAndDateBetween(
             userId, EntryType.EXPENSE, startDate, endDate);
-        
+
         return total != null ? total : BigDecimal.ZERO;
     }
 }
