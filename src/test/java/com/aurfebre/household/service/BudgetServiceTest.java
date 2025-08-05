@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -94,6 +95,21 @@ class BudgetServiceTest {
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getPeriod()).isEqualTo(BudgetPeriod.MONTHLY);
         verify(budgetRepository).findByUserIdAndPeriodAndIsActiveTrueOrderByStartDateDesc(1L, BudgetPeriod.MONTHLY);
+    }
+
+    @Test
+    void getBudgetsForWeek_ShouldReturnBudgetsWithinWeek() {
+        Budget weeklyBudget = new Budget(
+            1L, 2L, BudgetPeriod.WEEKLY, new BigDecimal("100000"),
+            LocalDate.of(2024,1,1), LocalDate.of(2024,1,7)
+        );
+        when(budgetRepository.findByUserIdAndPeriodAndIsActiveTrueOrderByStartDateDesc(1L, BudgetPeriod.WEEKLY))
+            .thenReturn(Arrays.asList(weeklyBudget));
+
+        List<Budget> result = budgetService.getBudgetsForWeek(1L, DayOfWeek.MONDAY, LocalDate.of(2024,1,3));
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0)).isEqualTo(weeklyBudget);
     }
 
     @Test

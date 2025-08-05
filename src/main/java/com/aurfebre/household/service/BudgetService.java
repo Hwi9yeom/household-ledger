@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +36,17 @@ public class BudgetService {
     @Transactional(readOnly = true)
     public List<Budget> getBudgetsByUserIdAndPeriod(Long userId, BudgetPeriod period) {
         return budgetRepository.findByUserIdAndPeriodAndIsActiveTrueOrderByStartDateDesc(userId, period);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Budget> getBudgetsForWeek(Long userId, DayOfWeek weekStartDay, LocalDate currentWeek) {
+        LocalDate start = currentWeek.with(TemporalAdjusters.previousOrSame(weekStartDay));
+        LocalDate end = start.plusDays(6);
+        return budgetRepository
+                .findByUserIdAndPeriodAndIsActiveTrueOrderByStartDateDesc(userId, BudgetPeriod.WEEKLY)
+                .stream()
+                .filter(b -> !b.getEndDate().isBefore(start) && !b.getStartDate().isAfter(end))
+                .toList();
     }
 
     @Transactional(readOnly = true)
