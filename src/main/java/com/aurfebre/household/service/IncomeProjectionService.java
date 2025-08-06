@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -171,6 +172,10 @@ public class IncomeProjectionService {
                 .stream()
                 .map(IncomeProjectionResponse::from)
                 .collect(Collectors.toList());
+    }
+
+    public BigDecimal calculateWeeklyIncome(BigDecimal monthlyIncome) {
+        return monthlyIncome.divide(BigDecimal.valueOf(4.345), 2, RoundingMode.HALF_UP);
     }
 
     private BigDecimal calculateAnnualIncome(BigDecimal monthlyIncome, Integer startMonth, Integer endMonth) {
