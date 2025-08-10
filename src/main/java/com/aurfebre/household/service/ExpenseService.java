@@ -1,6 +1,7 @@
 package com.aurfebre.household.service;
 
 import com.aurfebre.household.domain.Expense;
+import com.aurfebre.household.dto.ExpenseRequest;
 import com.aurfebre.household.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,12 @@ public class ExpenseService {
         return expenseRepository.findAll();
     }
 
-    public Expense createExpense(Expense expense) {
+    public Expense createExpense(ExpenseRequest expenseRequest) {
+        Expense expense = new Expense(
+                expenseRequest.getDescription(),
+                expenseRequest.getAmount(),
+                expenseRequest.getCategory()
+        );
         return expenseRepository.save(expense);
     }
 }

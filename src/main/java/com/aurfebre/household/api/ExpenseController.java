@@ -1,7 +1,9 @@
 package com.aurfebre.household.api;
 
 import com.aurfebre.household.domain.Expense;
+import com.aurfebre.household.dto.ExpenseRequest;
 import com.aurfebre.household.service.ExpenseService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,7 @@ public class ExpenseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Expense createExpense(@RequestBody Expense expense) {
-        return expenseService.createExpense(expense);
+    public Expense createExpense(@Valid @RequestBody ExpenseRequest expenseRequest) {
+        return expenseService.createExpense(expenseRequest);
     }
 }
