@@ -99,13 +99,15 @@ public class IncomeProjectionController {
         
         int monthCount = endMonth - startMonth + 1;
         BigDecimal annualIncome = monthlyIncome.multiply(BigDecimal.valueOf(monthCount));
+        BigDecimal weeklyIncome = incomeProjectionService.calculateWeeklyIncome(monthlyIncome);
         
         return ResponseEntity.ok(Map.of(
                 "monthlyIncome", monthlyIncome,
                 "startMonth", startMonth,
                 "endMonth", endMonth,
                 "monthCount", monthCount,
-                "projectedAnnualIncome", annualIncome
+                "projectedAnnualIncome", annualIncome,
+                "projectedWeeklyIncome", weeklyIncome
         ));
     }
 }

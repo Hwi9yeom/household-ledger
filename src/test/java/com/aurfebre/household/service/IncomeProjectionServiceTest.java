@@ -17,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -72,5 +73,15 @@ class IncomeProjectionServiceTest {
 
         assertThat(result).isEqualByComparingTo(BigDecimal.ZERO);
         verify(incomeProjectionRepository).sumProjectedIncomeByUserIdAndYear(1L, 2025);
+    }
+
+    @Test
+    void calculateWeeklyIncome_ShouldConvertMonthlyToWeekly() {
+        BigDecimal monthlyIncome = new BigDecimal("1000");
+        BigDecimal expected = monthlyIncome.divide(BigDecimal.valueOf(4.345), 2, RoundingMode.HALF_UP);
+
+        BigDecimal result = incomeProjectionService.calculateWeeklyIncome(monthlyIncome);
+
+        assertThat(result).isEqualByComparingTo(expected);
     }
 }
